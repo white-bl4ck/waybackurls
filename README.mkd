@@ -3,7 +3,9 @@
  auto Domain checking by me with python3. make sure  'termcolor' is installed.
 
 Installing Python library:
-```pip install termcolor```
+```pip3 install termcolor```
+
+How to use? just put your list of Domains in ```domains.txt``` file and ```python3 auto.py``` and enjoy :D
 
 Accept line-delimited domains on stdin, fetch known URLs from the Wayback Machine for `*.domain` and output them on stdout.
 
