@@ -1,5 +1,5 @@
 # waybackurls
-
+# Create by: https://github.com/imhunterand/
 Accept line-delimited domains on stdin, fetch known URLs from the Wayback Machine for `*.domain` and output them on stdout.
 
 Usage example:
