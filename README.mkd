@@ -1,5 +1,10 @@
 # waybackurls
 # Create by: https://github.com/imhunterand/
+ auto Domain checking by me with python3. make sure  'termcolor' is installed.
+
+Installing Python library:
+```pip install termcolor```
+
 Accept line-delimited domains on stdin, fetch known URLs from the Wayback Machine for `*.domain` and output them on stdout.
 
 Usage example:
