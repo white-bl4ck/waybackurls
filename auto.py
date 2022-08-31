@@ -8,10 +8,15 @@ def _sh(x):
         if x == 1:
             sh.write('go run main.go "$1" > "$2"')
         if x == 0:
-            if not os.path.isfile("felan"):
-                os.mkdir("domains")
-            with open('script.sh','w') as sh:
-                sh.write('go run main.go "$1" > domains/"$2"')
+            try:
+                os.mkdir('domains')
+                with open('script.sh','w') as sh:
+                    sh.write('go run main.go "$1" > domains/"$2"')
+            except FileExistsError:
+                with open('script.sh','w') as sh:
+                    sh.write('go run main.go "$1" > domains/"$2"')
+
+
 def _Counting():
     global lines
     with open('domains.txt','r') as f:
@@ -64,7 +69,8 @@ print('-----------------------------------------------------------\n\n')
 try:
     _what = int(input('separately saving = 0 \nmerge all = 1\nWhat to do? '))
     if _what == 1 :
-        _Counter()
+        _sh(_what)
+        _Counting()
         _run_script(_what)
         _end(_what)
     elif _what == 0:
