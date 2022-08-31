@@ -1,12 +1,17 @@
 # waybackurls
-# Create by: https://github.com/imhunterand/
- auto Domain checking by me with python3. make sure  'termcolor' is installed.
+## Create by: https://github.com/imhunterand/
+## Auto subdomain checking wrote by me.
 
-Installing Python library:
+make sure  'termcolor' is installed. 
 ```pip3 install termcolor```
 
-How to use? just put your list of Domains in ```domains.txt``` file and ```python3 auto.py``` and enjoy :D
+----------------------------------------
+### How to use with auto.py?
+just put your list of Domains in ```domains.txt``` file and ```python3 auto.py``` and enjoy :D
 
+
+----------------------------------------
+### run with go
 Accept line-delimited domains on stdin, fetch known URLs from the Wayback Machine for `*.domain` and output them on stdout.
 
 Usage example:
