@@ -1,34 +1,36 @@
 import os
 import time
 from termcolor import colored
-lines = 0
-_Counter = 0 
-def _sh(x):
-    with open('script.sh','w') as sh:
+
+# defines ;
+
+def create_bash_script(x):
+    with open('script.sh','w') as file_sh:
         if x == 1:
-            sh.write('go run main.go "$1" > "$2"')
+            file_sh.write('go run main.go "$1" > "$2"')
         if x == 0:
             try:
                 os.mkdir('domains')
-                with open('script.sh','w') as sh:
-                    sh.write('go run main.go "$1" > domains/"$2"')
+                with open('script.sh','w') as file_sh:
+                    file_sh.write('go run main.go "$1" > domains/"$2"')
             except FileExistsError:
-                with open('script.sh','w') as sh:
-                    sh.write('go run main.go "$1" > domains/"$2"')
+                with open('script.sh','w') as file_sh:
+                    file_sh.write('go run main.go "$1" > domains/"$2"')
 
-
-def _Counting():
-    global lines
-    with open('domains.txt','r') as f:
-        for i in f:
+def count_all_lines():
+    lines = 0
+    with open('domains.txt','r') as file_domain:
+        for i in file_domain:
             lines += 1
-def _run_script(x):
+    return lines
+
+def _run_script(x,lines):
     _Counter = 0
     if x == 1:
-        with open('domains.txt','r') as f:
+        with open('domains.txt','r') as file_domain:
             print('number of Lines: ', lines)
-            f.seek(0)
-            for rd in f: 
+            file_domain.seek(0)
+            for rd in file_domain: 
                 line_strip = rd.strip()
                 print("Process on: "+line_strip)
                 _Command = 'bash script.sh '+ line_strip +' '+str(_Counter+1)+'.way'
@@ -36,10 +38,10 @@ def _run_script(x):
                 _Counter += 1
                 print (colored('Line ('+ str(_Counter) +') Completed; ','green')+colored(line_strip,'red'))
     if x == 0:
-        with open('domains.txt','r') as f:
+        with open('domains.txt','r') as file_domain:
             print('number of Lines: ', lines)
-            f.seek(0)
-            for rd in f: 
+            file_domain.seek(0)
+            for rd in file_domain: 
                 line_strip = rd.strip()
                 _Command = 'bash script.sh '+ line_strip +' '+ line_strip
                 os.system(_Command)
@@ -69,14 +71,14 @@ print('-----------------------------------------------------------\n\n')
 try:
     _what = int(input('separately saving = 0 \nmerge all = 1\nWhat to do? '))
     if _what == 1 :
-        _sh(_what)
-        _Counting()
-        _run_script(_what)
+        create_bash_script(_what)
+        lines = count_all_lines()
+        _run_script(_what,lines)
         _end(_what)
     elif _what == 0:
-        _sh(_what)
-        _Counting()
-        _run_script(_what)
+        create_bash_script(_what)
+        lines = count_all_lines()
+        _run_script(_what,lines)
         _end(_what)
     else:
         print('Wrong value; try again. :)')
