@@ -8,7 +8,8 @@ def _sh(x):
         if x == 1:
             sh.write('go run main.go "$1" > "$2"')
         if x == 0:
-            os.system("mkdir domains")
+            if not os.path.isfile("felan"):
+                os.mkdir("domains")
             with open('script.sh','w') as sh:
                 sh.write('go run main.go "$1" > domains/"$2"')
 def _Counting():
