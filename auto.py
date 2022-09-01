@@ -1,7 +1,35 @@
 import os
 import time
-from termcolor import colored
+import sys
 
+def install(package):
+    os.system('pip3 install '+package)
+    
+try:
+    import pip
+except ImportError:
+    try:
+        input("No module named 'pip' found. press any key to install..[using sudo for installing it. 'sudo apt update; sudo apt install python3-pip']")
+        os.system('sudo apt update; sudo apt install python3-pip')
+        print('Run again;')
+        exit()
+    except:
+        print('You got error try installing manual [module "pip"]')
+        print('Run again;')
+        exit()
+
+try:
+    from termcolor import colored 
+except ImportError:
+    try:
+        input("No module named 'termcolor' found. press any key to install..")
+        install('termcolor')
+        print('Run again;')
+        exit()
+    except:
+        print('You got error try installing manual [module "termcolor"]')
+        print('Run again;')
+        exit()
 # defines ;
 
 def create_bash_script(x):
@@ -24,8 +52,17 @@ def count_all_lines():
             lines += 1
     return lines
 
+def count_lines_for_way(_Counter):
+    lines = 0
+    with open(str(_Counter)+'.way','r') as file_way:
+        for i in file_way:
+            lines += 1
+    return lines
+
+
 def _run_script(x,lines):
     _Counter = 0
+    _lines = 0
     if x == 1:
         with open('domains.txt','r') as file_domain:
             print('number of Lines: ', lines)
@@ -35,8 +72,10 @@ def _run_script(x,lines):
                 print("Process on: "+line_strip)
                 _Command = 'bash script.sh '+ line_strip +' '+str(_Counter+1)+'.way'
                 os.system(_Command)
-                _Counter += 1
-                print (colored('Line ('+ str(_Counter) +') Completed; ','green')+colored(line_strip,'red'))
+                _Command = "wc "+str(_Counter+1)+".way | cut -d ' ' -f 2"
+                lines = count_lines_for_way(_Counter+1)
+                print (colored('Line ('+ str(_Counter) +') Completed; ','green')+colored(line_strip,'red')+' '+str(lines)+' lines discovered. ')
+                _Counter += 1        
     if x == 0:
         with open('domains.txt','r') as file_domain:
             print('number of Lines: ', lines)
@@ -55,18 +94,30 @@ def _end(x):
     if x == 0:
         os.system('rm script.sh')
 
-def delay_print(s):
-    for c in s:
-        print(c,end='')
-        time.sleep(0.015)
+def banner():
+    return '''
+            
 
-delay_print('__        ___     _ _             _     _ _  _        _\n')
-delay_print("\ \      / / |__ (_) |_ ___      | |__ | | || |   ___| | __\n")
-delay_print(" \ \ /\ / /| '_ \| | __/ _ \_____| '_ \| | || |_ / __| |/ /\n")
-delay_print("  \ V  V / | | | | | ||  __/_____| |_) | |__   _| (__|   <\n")
-delay_print("   \_/\_/  |_| |_|_|\__\___|     |_.__/|_|  |_|  \___|_|\_\ \n")
+ █     █░▓█████  ▄▄▄▄      ▄▄▄█████▓▓█████ ▄▄▄       ███▄ ▄███▓
+▓█░ █ ░█░▓█   ▀ ▓█████▄    ▓  ██▒ ▓▒▓█   ▀▒████▄    ▓██▒▀█▀ ██▒
+▒█░ █ ░█ ▒███   ▒██▒ ▄██   ▒ ▓██░ ▒░▒███  ▒██  ▀█▄  ▓██    ▓██░
+░█░ █ ░█ ▒▓█  ▄ ▒██░█▀     ░ ▓██▓ ░ ▒▓█  ▄░██▄▄▄▄██ ▒██    ▒██ 
+░░██▒██▓ ░▒████▒░▓█  ▀█▓     ▒██▒ ░ ░▒████▒▓█   ▓██▒▒██▒   ░██▒
+░ ▓░▒ ▒  ░░ ▒░ ░░▒▓███▀▒     ▒ ░░   ░░ ▒░ ░▒▒   ▓▒█░░ ▒░   ░  ░
+  ▒ ░ ░   ░ ░  ░▒░▒   ░        ░     ░ ░  ░ ▒   ▒▒ ░░  ░      ░
+  ░   ░     ░    ░    ░      ░         ░    ░   ▒   ░      ░   
+    ░       ░  ░ ░                     ░  ░     ░  ░       ░   
+                      ░                                                                   '''
+        
+def delay_print(string):
+    for char in string:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(0.01)
+
+print(colored(banner(),'red'))
 delay_print("https://white_bl4ck.t.me\n")
-print('-----------------------------------------------------------\n\n')
+delay_print('-----------------------------------------------------------\n\n')
 
 try:
     _what = int(input('separately saving = 0 \nmerge all = 1\nWhat to do? '))
